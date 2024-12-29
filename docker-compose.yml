@@ -1,0 +1,33 @@
+services:
+  web:
+    build: .
+    ports:
+      - 8004:8000
+    command: gunicorn app.main:app --workers 4 --access-logfile '-' --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+    depends_on:
+      - redis
+    environment:
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+
+  celery-worker:
+    container_name: celery
+    build: .
+    command: celery -A app.worker.celery worker --loglevel INFO --events --logfile=app/logs/celery.log
+    environment:
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+    depends_on:
+      - web
+      - redis
+
+  redis:
+    container_name: redis
+    image: redis:7.4.0-alpine3.20
+
+  task-admin:
+    container_name: task-admin
+    build: ./front-end/task-admin
+    ports:
+      - 8888:4173
+    command: npm run serve

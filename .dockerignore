@@ -1,0 +1,51 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment directories
+venv/
+.env/
+.env*/    # Catch hidden virtual environments or any env-related dirs
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.eggs/
+.eggs/
+
+# Unit test / coverage results
+.coverage
+*.cover
+.hypothesis/
+.cache/
+.pytest_cache/
+.tox/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Docker-specific files
+Dockerfile
+docker-compose.yml
+
+# VSCode and other IDEs
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+*.swp
+*.swo
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+*.orig
+
+# Git files
+.git/
+.gitignore
