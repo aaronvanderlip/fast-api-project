@@ -9,8 +9,7 @@ This application stack consist of the following notable technologies
 - [Schemathesis](https://schemathesis.readthedocs.io/en/stable/)
 
 ## Starting the application
-
-Unzip the provide file and ensure you have a Docker daemon running. Running Docker Desktop should be sufficient.
+Ensure you have a Docker daemon running. Running Docker Desktop should be sufficient.
 
 In the directory run the following command
 
