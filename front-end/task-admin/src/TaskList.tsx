@@ -1,4 +1,4 @@
-import { List, Datagrid, TextField, DateField } from 'react-admin';
+import { List, Datagrid, TextField} from 'react-admin';
 
 export const TaskList = () => (
     <List pagination={false} title="Task Dashboard">

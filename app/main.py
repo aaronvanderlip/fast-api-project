@@ -52,7 +52,7 @@ class SortParams(BaseModel):
 
 
 class SleepyTaskModel(BaseModel):
-    seconds: conint(gt=0, lt=3600)
+    seconds: Annotated[int, conint(gt=0, lt=3600)]
 
 
 @app.get("/")

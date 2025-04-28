@@ -1,6 +1,8 @@
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
-const apiUrl = "http://127.0.0.1:8004"; //FIXME, this should be an envar
+
+
+const apiUrl = import.meta.env.VITE_API_ENDPOINT
 const httpClient = fetchUtils.fetchJson;
 
 interface GetListParams {
