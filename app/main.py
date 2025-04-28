@@ -5,10 +5,10 @@ from uuid import UUID
 
 import markdown
 import redis
-from fastapi import Body, FastAPI, Query, Request
+from fastapi import FastAPI, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
-from pydantic import BaseModel, conint
+from pydantic import BaseModel, Field
 
 from app.worker import celery as celery_app
 from app.worker import fib, sleepy
@@ -52,7 +52,10 @@ class SortParams(BaseModel):
 
 
 class SleepyTaskModel(BaseModel):
-    seconds: Annotated[int, conint(gt=0, lt=3600)]
+    seconds: int = Field(..., gt=0, lt=3600, strict=True)
+
+class FibTaskModel(BaseModel):
+    nthNumber: int = Field(..., gt=0, lt=30, strict=True)
 
 
 @app.get("/")
@@ -112,7 +115,7 @@ def sleepy_task(task: SleepyTaskModel) -> TaskResult:
 
 
 @app.post("/tasks/fib", status_code=201)
-def fib_task(nthNumber: int = Body(embed=True)) -> TaskResult:
+def fib_task(task: FibTaskModel) -> TaskResult:
     """
     Create a new task to compute the nth Fibonacci number asynchronously.
 
@@ -138,7 +141,7 @@ def fib_task(nthNumber: int = Body(embed=True)) -> TaskResult:
     Status Code:
         201 Created: The task has been successfully created and queued.
     """
-    task_result = fib.delay(nthNumber)
+    task_result = fib.delay(task.nthNumber)
     result = {
         "id": task_result.id,
         "state": task_result.state,
